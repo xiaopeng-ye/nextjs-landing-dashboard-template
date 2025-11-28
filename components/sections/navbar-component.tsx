@@ -1,0 +1,73 @@
+import { MenuIcon } from "lucide-react";
+import Link from "next/link";
+import { ModeToggle } from "@/components/mode-toggle";
+import Logo from "@/components/sections/logo";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+type NavigationItem = {
+  title: string;
+  href: string;
+}[];
+
+const Navbar = ({ navigationData }: { navigationData: NavigationItem }) => {
+  return (
+    <header className="bg-background sticky top-0 z-50">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 py-7 sm:px-6">
+        <div className="text-muted-foreground flex flex-1 items-center gap-8 font-medium md:justify-center lg:gap-16">
+          <Link href="#home" className="hover:text-primary max-md:hidden">
+            Home
+          </Link>
+          <Link href="#products" className="hover:text-primary max-md:hidden">
+            Products
+          </Link>
+          <Link href="#home" className="hover:text-primary max-md:hidden">
+            <Logo className="text-foreground gap-3" />
+          </Link>
+          <Link href="#about-us" className="hover:text-primary max-md:hidden">
+            About Us
+          </Link>
+          <Link href="#contacts" className="hover:text-primary max-md:hidden">
+            Contacts
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-6">
+          {/* <Button variant='ghost' size='icon'>
+            <SearchIcon />
+            <span className='sr-only'>Search</span>
+          </Button> */}
+          <Button variant="outline" asChild>
+            <Link href="/dashboard">Dashboard</Link>
+          </Button>
+          <ModeToggle />
+          <DropdownMenu>
+            <DropdownMenuTrigger className="md:hidden" asChild>
+              <Button variant="outline" size="icon">
+                <MenuIcon />
+                <span className="sr-only">Menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end">
+              <DropdownMenuGroup>
+                {navigationData.map((item) => (
+                  <DropdownMenuItem key={item.title}>
+                    <Link href={item.href}>{item.title}</Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
